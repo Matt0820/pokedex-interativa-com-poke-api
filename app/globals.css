@@ -812,3 +812,16 @@ main > div.grid > div.mt-4 {
 .rotom-app > div.grid > aside h2,.rotom-app > div.grid > aside p { color:#fffaf4!important; }
 .rotom-app > div.grid > aside > div:last-child > button .text-slate-400 { color:#52677c!important; }
   @media (max-width:640px) { .dex-card-grid { grid-template-columns:1fr; gap:12px; padding-inline:0; } .dex-pokemon-card { min-height:82px; } .dex-pokemon-card > span:nth-child(3) { font-size:13px; line-height:1.25; white-space:normal; } }
+
+  /* Keep every card horizontal and readable, even when the list gets narrow. */
+  .dex-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dex-pokemon-card { min-width:0; display:grid!important; grid-template-columns:42px 60px minmax(0,1fr) 18px; align-items:center; gap:10px; }
+  .dex-pokemon-card > span,
+  .dex-pokemon-card > img,
+  .dex-pokemon-card > svg { writing-mode:horizontal-tb!important; text-orientation:mixed!important; }
+  .dex-pokemon-card > span:nth-child(3) { min-width:0; overflow:visible!important; word-break:normal!important; overflow-wrap:normal!important; white-space:normal!important; line-height:1.35; }
+  @media (max-width:640px) {
+    .dex-card-grid { grid-template-columns:1fr; }
+    .dex-pokemon-card { grid-template-columns:42px 64px minmax(0,1fr) 18px; min-height:92px; padding:10px 12px; }
+    .dex-pokemon-card > span:nth-child(3) { font-size:14px; }
+  }
