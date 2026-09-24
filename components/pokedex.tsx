@@ -616,7 +616,7 @@ export default function Pokedex() {
           </div>
         </div>
       </section>
-      <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 lg:grid-cols-[360px_1fr] lg:px-10">
+      <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 lg:grid-cols-[420px_1fr] lg:px-10">
         <aside>
           <div className="mb-5 flex items-center justify-between">
             <div>
@@ -656,7 +656,7 @@ export default function Pokedex() {
               <ChevronDown className="pointer-events-none absolute right-3 top-3.5 h-3.5 text-slate-400" />
             </label>
           </div>
-          <div className="space-y-2 lg:max-h-[610px] lg:overflow-y-auto lg:pr-2">
+          <div className="dex-card-grid lg:max-h-[610px] lg:overflow-y-auto lg:pr-2">
             {loadingList ? (
               <div className="rounded-xl bg-white p-5 text-sm text-slate-400">
                 Carregando Pokédex...
@@ -667,7 +667,7 @@ export default function Pokedex() {
                   key={item.name}
                   onClick={() => loadPokemon(item.url)}
                   data-selected={selected?.name === item.name || undefined}
-                  className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${selected?.name === item.name ? "border-[#f1c243] bg-[#fff9e8] shadow-sm" : "border-transparent bg-white hover:border-slate-200"}`}
+                  className={`dex-pokemon-card flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${selected?.name === item.name ? "border-[#f1c243] bg-[#fff9e8] shadow-sm" : "border-transparent bg-white hover:border-slate-200"}`}
                 >
                   <span className="w-8 text-xs font-bold text-slate-400">
                     {padId(pokemonId(item))}
