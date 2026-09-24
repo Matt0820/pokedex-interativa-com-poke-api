@@ -207,15 +207,15 @@ main {
 }
 
 .rotom-app {
-  --app-bg: #d8e0e9;
-  --app-text: #16233d;
-  --app-panel: #f4f7ee;
-  --app-panel-muted: #d9eee5;
-  --app-control: #a8e5d5;
-  --app-border: #8295a8;
-  --app-border-soft: #b8c4d1;
-  --app-on-accent: #fff8e8;
-  --app-input-text: #16233d;
+  --app-bg: #f2e7e5;
+  --app-text: #271b27;
+  --app-panel: #fffaf4;
+  --app-panel-muted: #f8d7d0;
+  --app-control: #fffdf8;
+  --app-border: #542a35;
+  --app-border-soft: #e5b9b0;
+  --app-on-accent: #fffaf4;
+  --app-input-text: #271b27;
   overflow: hidden;
   background: var(--app-bg) !important;
   color: var(--app-text);
@@ -771,3 +771,29 @@ main > div.grid > div.mt-4 {
 .rotom-app.theme-dark .text-\[\#a87800\] {
   color: #ffd447 !important;
 }
+
+/* Rotom Pokédex skin: red shell, readable controls, and a deliberate information grid. */
+.rotom-app { --app-bg:#f5e9e7; --app-text:#291b26; --app-panel:#fffaf4; --app-border:#5a2935; --app-border-soft:#e6b9b1; background:var(--app-bg)!important; color:var(--app-text); font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+.rotom-app h1,.rotom-app h2,.rotom-app h3 { font-family:'Silkscreen',ui-monospace,monospace; letter-spacing:.01em; }
+.rotom-app > header { border-bottom:5px solid #291b26!important; background:#d9363e!important; box-shadow:inset 0 -4px 0 rgba(255,255,255,.16),0 5px 0 #9e2534!important; }
+.rotom-app > header::after { display:block; border-color:#291b26; background:#f7d34a; box-shadow:12px 0 0 #48c7c2; }
+.rotom-app > header .text-slate-400,.rotom-app > header .text-slate-500,.rotom-app > header .text-\[\#192441\] { color:#fffaf4!important; }
+.rotom-app > header button,.rotom-app .theme-toggle { border:3px solid #291b26!important; border-radius:6px!important; background:#f7d34a!important; color:#291b26!important; box-shadow:4px 4px 0 #9e2534!important; font-family:'Silkscreen',ui-monospace,monospace; font-size:.72rem; }
+.rotom-app > section { min-height:365px; border-bottom:5px solid #291b26; background:#291b26!important; background-image:radial-gradient(rgba(72,199,194,.2) 1px,transparent 1px)!important; background-size:18px 18px!important; }
+.rotom-app > section h1 { color:#f8d9d3; text-shadow:4px 4px 0 #71313d; }
+.rotom-app > section p { color:#f8ede8!important; }
+.rotom-app > section > div:last-child > div { border:4px solid #291b26; border-radius:7px; background:#fffaf4; box-shadow:6px 6px 0 #9e2534; }
+.rotom-app > section input { font-family:Inter,ui-sans-serif,system-ui,sans-serif; font-size:1rem; }
+.rotom-app > section button { border:3px solid #291b26; border-radius:5px; background:#f7d34a; box-shadow:3px 3px 0 #9e2534; }
+.rotom-app > div.grid { grid-template-columns:minmax(260px,300px) minmax(0,1fr); align-items:start; gap:28px; background:var(--app-bg); padding-top:36px; padding-bottom:48px; }
+.rotom-app > div.grid > aside { position:sticky; top:24px; padding:18px; border:4px solid #291b26; border-radius:8px; background:#d9363e; box-shadow:6px 6px 0 #9e2534; }
+.rotom-app > div.grid > aside select { border:3px solid #291b26!important; border-radius:5px!important; background:#fffaf4!important; color:#291b26!important; box-shadow:3px 3px 0 #9e2534; font-family:Inter,ui-sans-serif,system-ui,sans-serif; font-size:.85rem; }
+.rotom-app > div.grid > aside > div:last-child > button { border:3px solid #291b26!important; border-radius:6px!important; background:#fffaf4!important; box-shadow:3px 3px 0 #9e2534; }
+.rotom-app > div.grid > aside > div:last-child > button:hover,.rotom-app > div.grid > aside > div:last-child > button[data-selected='true'] { background:#f7d34a!important; }
+.rotom-app section.min-w-0 > div.overflow-hidden,.rotom-app section.min-w-0 > div.rounded-2xl { border:4px solid #291b26!important; border-radius:8px!important; background:#fffaf4!important; box-shadow:6px 6px 0 #b57478!important; }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] { border:4px solid #291b26!important; border-radius:7px!important; background:#d9363e!important; box-shadow:5px 5px 0 #9e2534; }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button { color:#fffaf4!important; font-family:'Silkscreen',monospace; }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button:hover,.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button[class*='bg-\\[\\#192441\\]'] { background:#f7d34a!important; color:#291b26!important; }
+.rotom-app footer { border-top:4px solid #291b26!important; background:#f7d34a!important; color:#291b26!important; }
+@media (max-width:1023px) { .rotom-app > div.grid { grid-template-columns:1fr; gap:20px; } .rotom-app > div.grid > aside { position:static; } }
+@media (max-width:640px) { .rotom-app > header::after { right:16px; transform:scale(.75); transform-origin:right center; } .rotom-app > section { min-height:330px; } .rotom-app > div.grid { padding-top:24px; } }
