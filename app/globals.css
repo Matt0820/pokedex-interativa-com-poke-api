@@ -207,9 +207,18 @@ main {
 }
 
 .rotom-app {
+  --app-bg: #d8e0e9;
+  --app-text: #16233d;
+  --app-panel: #f4f7ee;
+  --app-panel-muted: #d9eee5;
+  --app-control: #a8e5d5;
+  --app-border: #8295a8;
+  --app-border-soft: #b8c4d1;
+  --app-on-accent: #fff8e8;
+  --app-input-text: #16233d;
   overflow: hidden;
-  background: #d8e0e9 !important;
-  color: #16233d;
+  background: var(--app-bg) !important;
+  color: var(--app-text);
 }
 
 .rotom-app > header {
@@ -235,7 +244,7 @@ main {
 .rotom-app > header .text-slate-400,
 .rotom-app > header .text-slate-500,
 .rotom-app > header .text-\[\#192441\] {
-  color: #fff8e8 !important;
+  color: var(--app-on-accent) !important;
 }
 
 .rotom-app > header button {
@@ -301,7 +310,7 @@ main {
 }
 
 .rotom-app > section input {
-  color: #16233d !important;
+  color: var(--app-input-text) !important;
   font-family: 'Silkscreen', monospace;
 }
 
@@ -314,7 +323,7 @@ main {
 
 .rotom-app > div.grid {
   position: relative;
-  background: #d8e0e9;
+  background: var(--app-bg);
   padding-top: 42px;
   padding-bottom: 42px;
 }
@@ -329,7 +338,7 @@ main {
 
 .rotom-app > div.grid > aside h2,
 .rotom-app > div.grid > aside p {
-  color: #fff8e8 !important;
+  color: var(--app-on-accent) !important;
 }
 
 .rotom-app > div.grid > aside select {
@@ -360,7 +369,7 @@ main {
 .rotom-app section.min-w-0 > div.rounded-2xl {
   border: 5px solid #16233d !important;
   border-radius: 10px !important;
-  background: #f4f7ee !important;
+  background: var(--app-panel) !important;
   box-shadow: 7px 7px 0 #8d9aaa !important;
 }
 
@@ -382,7 +391,7 @@ main {
 .rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button {
   border: 3px solid transparent;
   border-radius: 4px !important;
-  color: #fff8e8 !important;
+  color: var(--app-on-accent) !important;
 }
 
 .rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button:hover,
@@ -396,16 +405,25 @@ main {
 .rotom-app footer {
   border-top: 5px solid #16233d !important;
   background: #a8e5d5 !important;
-  color: #16233d !important;
+  color: var(--app-input-text) !important;
 }
 
 .rotom-app.theme-dark {
-  background: #101827 !important;
-  color: #edf7f3;
+  --app-bg: #101827;
+  --app-text: #d9eee5;
+  --app-panel: #1c2a3d;
+  --app-panel-muted: #263b50;
+  --app-control: #31566b;
+  --app-border: #527087;
+  --app-border-soft: #527087;
+  --app-on-accent: #d9eee5;
+  --app-input-text: #d9eee5;
+  background: var(--app-bg) !important;
+  color: var(--app-text);
 }
 
 .rotom-app.theme-dark > div.grid {
-  background: #101827;
+  background: var(--app-bg);
 }
 
 .rotom-app.theme-dark .bg-white,
@@ -440,13 +458,53 @@ main {
 }
 
 .rotom-app.theme-dark > section input.text-slate-800 {
-  color: #16233d !important;
+  color: var(--app-input-text) !important;
 }
 
 .rotom-app.theme-dark .text-\[\#6f5700\],
 .rotom-app.theme-dark .text-\[\#b28700\],
 .rotom-app.theme-dark .text-\[\#a87800\] {
   color: #ffd447 !important;
+}
+
+/* Light content surfaces need dark ink, even when the app theme is dark. */
+.rotom-app.theme-dark > div.grid > aside > div:last-child button,
+.rotom-app.theme-dark section.min-w-0,
+.rotom-app.theme-dark section.min-w-0 .text-\[\#192441\],
+.rotom-app.theme-dark section.min-w-0 .text-\[\#24304e\],
+.rotom-app.theme-dark section.min-w-0 .text-slate-900,
+.rotom-app.theme-dark section.min-w-0 .text-slate-800,
+.rotom-app.theme-dark section.min-w-0 .text-slate-700 {
+  color: #16233d !important;
+}
+
+.rotom-app.theme-dark section.min-w-0 .text-slate-600,
+.rotom-app.theme-dark section.min-w-0 .text-slate-500,
+.rotom-app.theme-dark section.min-w-0 .text-slate-400,
+.rotom-app.theme-dark > div.grid > aside > div:last-child button .text-slate-400 {
+  color: #52677c !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button {
+  background: var(--app-bg) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button .text-\[\#24304e\],
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button .text-slate-400 {
+  color: var(--app-text) !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button[data-selected='true'] {
+  background: #ffd447 !important;
+  border-color: #16233d !important;
+  color: #16233d !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button[data-selected='true'] span,
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button[data-selected='true'] svg {
+  color: #16233d !important;
 }
 
 .rotom-app.theme-dark footer {
@@ -535,7 +593,7 @@ main {
 
 .rotom-app .text-slate-500,
 .rotom-app .text-slate-400 {
-  color: #52677c !important;
+  color: color-mix(in srgb, var(--app-text) 65%, var(--app-bg)) !important;
 }
 
 .rotom-app [class*='border-slate-'] {
@@ -650,20 +708,19 @@ main > div.grid > div.mt-4 {
 .rotom-app.theme-dark .text-slate-900,
 .rotom-app.theme-dark .text-slate-800,
 .rotom-app.theme-dark .text-slate-700 {
-  color: #edf7f3 !important;
+  color: var(--app-text) !important;
 }
 
 .rotom-app.theme-dark .text-slate-600,
 .rotom-app.theme-dark .text-slate-500,
 .rotom-app.theme-dark .text-slate-400 {
-  color: #a5bfca !important;
+  color: color-mix(in srgb, var(--app-text) 68%, var(--app-bg)) !important;
 }
 
 .rotom-app.theme-dark .bg-white,
 .rotom-app.theme-dark .bg-\[\#f8f9fd\],
 .rotom-app.theme-dark .bg-\[\#fafbfe\],
 .rotom-app.theme-dark .bg-\[\#f7f8fc\],
-.rotom-app.theme-dark .bg-\[\#fffaf0\],
 .rotom-app.theme-dark .bg-\[\#fff9e8\] {
   background: #1c2a3d !important;
   border-color: #527087 !important;

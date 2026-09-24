@@ -658,6 +658,7 @@ export default function Pokedex() {
                 <button
                   key={item.name}
                   onClick={() => loadPokemon(item.url)}
+                  data-selected={selected?.name === item.name || undefined}
                   className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${selected?.name === item.name ? "border-[#f1c243] bg-[#fff9e8] shadow-sm" : "border-transparent bg-white hover:border-slate-200"}`}
                 >
                   <span className="w-8 text-xs font-bold text-slate-400">
