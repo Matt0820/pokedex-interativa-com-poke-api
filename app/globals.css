@@ -711,6 +711,42 @@ main > div.grid > div.mt-4 {
   color: var(--app-text) !important;
 }
 
+/* Final visual pass: quiet surfaces and clear hierarchy. */
+.rotom-app { --app-bg: #f4f7fb; --app-text: #182238; --app-panel: #fff; --app-border: #d9e1ee; background: var(--app-bg) !important; color: var(--app-text); }
+.rotom-app > header { border-bottom: 1px solid #d9e1ee !important; background: rgba(255,255,255,.92) !important; box-shadow: 0 1px 0 rgba(24,34,56,.04) !important; }
+.rotom-app > header::after { display: none; }
+.rotom-app > header button, .rotom-app .theme-toggle { border: 1px solid #d9e1ee !important; border-radius: 10px !important; background: #fff !important; box-shadow: none !important; color: #52627d !important; }
+.rotom-app > section { min-height: 0; border-bottom: 0; background: linear-gradient(135deg,#17213b 0%,#24345b 62%,#334d83 100%) !important; background-image: radial-gradient(rgba(126,231,220,.16) 1px,transparent 1px) !important; background-size: 22px 22px !important; }
+.rotom-app > section h1 { color: #fff; text-shadow: none; }
+.rotom-app > section > div:last-child > div { border: 1px solid rgba(255,255,255,.8); border-radius: 14px; background: #fff; box-shadow: 0 18px 45px rgba(8,15,35,.28); }
+.rotom-app > section button { border: 0; border-radius: 10px; box-shadow: none; }
+.rotom-app > div.grid { background: var(--app-bg); padding-top: 32px; }
+.rotom-app > div.grid > aside { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.rotom-app > div.grid > aside select { border: 1px solid #d9e1ee !important; border-radius: 10px !important; background: #fff !important; box-shadow: none; }
+.rotom-app > div.grid > aside > div:last-child > button { border: 1px solid #e1e7f0 !important; border-radius: 12px !important; background: #fff !important; box-shadow: 0 2px 8px rgba(24,34,56,.04); }
+.rotom-app > div.grid > aside > div:last-child > button:hover, .rotom-app > div.grid > aside > div:last-child > button[data-selected='true'] { background: #fff8df !important; }
+.rotom-app section.min-w-0 > div.overflow-hidden, .rotom-app section.min-w-0 > div.rounded-2xl { border: 1px solid #d9e1ee !important; border-radius: 18px !important; background: #fff !important; box-shadow: 0 10px 30px rgba(24,34,56,.06) !important; }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] { border: 1px solid #d9e1ee !important; border-radius: 14px !important; background: #fff !important; box-shadow: 0 4px 14px rgba(24,34,56,.05); }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button { color: #66738b !important; }
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button:hover, .rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button[class*='bg-\\[\\#192441\\]'] { background: #182238 !important; color: #fff !important; box-shadow: none; }
+.rotom-app.theme-dark { --app-bg: #0f172a; --app-text: #ecf4ff; --app-panel: #17233b; --app-border: #2d3d5a; }
+.rotom-app.theme-dark > header { background: rgba(15,23,42,.92) !important; border-color: #2d3d5a !important; }
+.rotom-app.theme-dark > div.grid { background: var(--app-bg); }
+.rotom-app.theme-dark > div.grid > aside > div:last-child > button, .rotom-app.theme-dark > div.grid > nav[aria-label='Informações do Pokémon'] { background: #17233b !important; border-color: #2d3d5a !important; }
+.rotom-app.theme-dark section.min-w-0 > div.overflow-hidden, .rotom-app.theme-dark section.min-w-0 > div.rounded-2xl { background: #17233b !important; border-color: #2d3d5a !important; }
+.rotom-app.theme-dark .bg-white, .rotom-app.theme-dark .bg-\[\#f8f9fd\], .rotom-app.theme-dark .bg-\[\#fafbfe\], .rotom-app.theme-dark .bg-\[\#f7f8fc\] { background: #1d2b46 !important; border-color: #334765 !important; }
+.rotom-app.theme-dark .text-\[\#192441\], .rotom-app.theme-dark .text-\[\#24304e\], .rotom-app.theme-dark .text-slate-700 { color: #edf4ff !important; }
+.rotom-app.theme-dark .text-slate-500, .rotom-app.theme-dark .text-slate-400 { color: #9fb0c9 !important; }
+
+.rotom-app.theme-light > section { background-color: #17213b !important; background-image: radial-gradient(rgba(126,231,220,.16) 1px,transparent 1px) !important; }
+.rotom-app.theme-light > section h1 { color: #ffffff !important; }
+.rotom-app.theme-light > section p { color: #d5f5e7 !important; }
+.rotom-app.theme-light > header .text-slate-500, .rotom-app.theme-light > header .text-\[\#192441\] { color: #52627d !important; }
+.rotom-app.theme-light > div.grid > aside h2 { color: #182238 !important; }
+.rotom-app.theme-light > div.grid > aside p { color: #66738b !important; }
+.rotom-app.theme-light section.min-w-0 .text-\[\#192441\], .rotom-app.theme-light section.min-w-0 .text-\[\#24304e\], .rotom-app.theme-light section.min-w-0 .text-slate-700 { color: #182238 !important; }
+.rotom-app.theme-light section.min-w-0 .text-slate-500, .rotom-app.theme-light section.min-w-0 .text-slate-400 { color: #66738b !important; }
+
 .rotom-app.theme-dark .text-slate-600,
 .rotom-app.theme-dark .text-slate-500,
 .rotom-app.theme-dark .text-slate-400 {

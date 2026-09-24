@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Pokédex — Guia de treinamento',
-  description: 'Explore Pokémon, tipos, movesets base e TMs compatíveis com dados da PokéAPI.',
+  title: 'Pokédex | Explore o universo Pokémon',
+  description: 'Pesquise Pokémon, compare atributos, descubra evoluções e consulte dados oficiais da PokéAPI.',
   generator: 'v0.app',
   icons: {
     icon: [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronDown,
   ChevronLeft,
@@ -186,9 +186,9 @@ function TypePill({ name }: { name: string }) {
     <span
       title={TYPE_LABELS[name] || formatName(name)}
       aria-label={`Tipo ${TYPE_LABELS[name] || formatName(name)}`}
-      className="inline-flex h-[100px] w-[100px] items-center justify-center"
+      className="inline-flex h-7 w-20 items-center justify-center"
     >
-      {TYPE_IDS[name] && <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${TYPE_IDS[name]}.png`} alt={TYPE_LABELS[name] || formatName(name)} className="h-[100px] w-[100px] object-contain" />}
+      {TYPE_IDS[name] && <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${TYPE_IDS[name]}.png`} alt={TYPE_LABELS[name] || formatName(name)} className="h-7 w-20 object-contain" />}
     </span>
   );
 }
@@ -322,6 +322,7 @@ export default function Pokedex() {
   const [description, setDescription] = useState("");
   const [locations, setLocations] = useState<EncounterLocation[]>([]);
   const [loadingVarieties, setLoadingVarieties] = useState(false);
+  const requestId = useRef(0);
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "light";
     const savedTheme = window.localStorage.getItem("pokedex-theme") as ThemeMode | null;
@@ -401,6 +402,7 @@ export default function Pokedex() {
   }, [selected]);
 
   async function loadPokemon(url: string) {
+    const currentRequest = ++requestId.current;
     setLoadingPokemon(true);
     setLoadingVarieties(true);
     setDescription("");
@@ -408,6 +410,7 @@ export default function Pokedex() {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Falha ao carregar o Pokémon");
       const data = await response.json();
+      if (currentRequest !== requestId.current) return;
       setSelected(data);
       setTab("overview");
       const speciesResponse = await fetch(
@@ -416,6 +419,7 @@ export default function Pokedex() {
       );
       if (!speciesResponse.ok) throw new Error("Falha ao carregar a espécie");
       const species = await speciesResponse.json();
+      if (currentRequest !== requestId.current) return;
       const originalDescription = translateDescription(
         species.flavor_text_entries,
       );
@@ -442,14 +446,17 @@ export default function Pokedex() {
           : nextVarieties,
       );
     } catch {
+      if (currentRequest !== requestId.current) return;
       setSelected(null);
       setSpeciesInfo(null);
       setEvolutionChain(null);
       setDescription("");
       setVarieties([]);
     } finally {
-      setLoadingPokemon(false);
-      setLoadingVarieties(false);
+      if (currentRequest === requestId.current) {
+        setLoadingPokemon(false);
+        setLoadingVarieties(false);
+      }
     }
   }
 
@@ -459,7 +466,9 @@ export default function Pokedex() {
     return list.filter((item) => {
       const id = pokemonId(item);
       const matchesQuery =
-        item.name.includes(normalizedQuery) || String(id) === normalizedQuery;
+        item.name.includes(normalizedQuery) ||
+        formatName(item.name).toLowerCase().includes(normalizedQuery) ||
+        String(id) === normalizedQuery;
       const matchesType = !typeNames || typeNames.has(item.name);
       const matchesGeneration =
         generationNumber <= 0 || generationForId(id) === generationNumber;
@@ -640,8 +649,7 @@ export default function Pokedex() {
                 onChange={(e) => setGeneration(e.target.value)}
                 className="w-full appearance-none rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-500 outline-none"
               >
-                <option>{generation}</option>
-                {generations.slice(1).map((g) => (
+                {generations.map((g) => (
                   <option key={g}>{g}</option>
                 ))}
               </select>
