@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -465,6 +465,337 @@ main {
 .rotom-app.theme-dark .text-\[\#b28700\],
 .rotom-app.theme-dark .text-\[\#a87800\] {
   color: #ffd447 !important;
+}
+
+/* Product surface: calm hierarchy, shared tokens, and readable type. */
+.rotom-app {
+  --page-bg: #f3f6f3;
+  --surface: #ffffff;
+  --surface-muted: #eaf2ef;
+  --surface-soft: #f7faf8;
+  --ink: #16233d;
+  --muted: #5f7180;
+  --line: #d7e3df;
+  --hero: #17223e;
+  --accent: #d6a900;
+  --focus: #087f78;
+  min-height: 100vh;
+  background: var(--page-bg) !important;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.rotom-app button,
+.rotom-app input,
+.rotom-app select,
+.rotom-app kbd {
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0;
+}
+
+.rotom-app h1,
+.rotom-app h2,
+.rotom-app h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0;
+}
+
+.rotom-app,
+.rotom-app * {
+  border-radius: 10px;
+}
+
+.rotom-app > header {
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  box-shadow: none !important;
+}
+
+.rotom-app > header::after {
+  display: none;
+}
+
+.rotom-app > header > div,
+.rotom-app > section > div,
+.rotom-app > div.grid {
+  max-width: 1240px;
+}
+
+.rotom-app > header .text-\[\#192441\],
+.rotom-app > header .text-slate-400,
+.rotom-app > header .text-slate-500 {
+  color: var(--ink) !important;
+}
+
+.rotom-app > header .text-slate-400 {
+  color: var(--muted) !important;
+}
+
+.rotom-app > header button:not(.theme-toggle) {
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  box-shadow: none;
+}
+
+.rotom-app .theme-toggle {
+  border: 1px solid var(--ink) !important;
+  background: var(--ink) !important;
+  color: #ffffff !important;
+  box-shadow: none;
+}
+
+.rotom-app > section {
+  min-height: 0;
+  border: 0;
+  background: var(--hero) !important;
+  background-image: linear-gradient(120deg, rgba(8, 127, 120, 0.25), transparent 55%) !important;
+}
+
+.rotom-app > section > div:first-child {
+  display: none;
+}
+
+.rotom-app > section h1 {
+  color: #f3fbf7;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-shadow: none;
+}
+
+.rotom-app > section p {
+  color: #bad2cd !important;
+}
+
+.rotom-app > section > div:last-child > div {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 12px 30px rgba(8, 20, 29, 0.24);
+}
+
+.rotom-app > section input {
+  color: var(--ink) !important;
+}
+
+.rotom-app > section button {
+  border: 0;
+  background: #f4c542;
+  box-shadow: none;
+}
+
+.rotom-app > div.grid {
+  grid-template-columns: 280px minmax(0, 1fr) !important;
+  gap: 32px;
+  background: var(--page-bg);
+  padding-top: 36px;
+  padding-bottom: 48px;
+}
+
+.rotom-app > div.grid > aside {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.rotom-app > div.grid > aside h2,
+.rotom-app > div.grid > aside p {
+  color: var(--ink) !important;
+}
+
+.rotom-app > div.grid > aside p,
+.rotom-app > div.grid > aside .text-slate-400 {
+  color: var(--muted) !important;
+}
+
+.rotom-app > div.grid > aside select {
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  box-shadow: none;
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 {
+  max-height: none;
+  padding-right: 2px;
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 > button {
+  min-height: 68px;
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 > button:hover,
+.rotom-app > div.grid > aside > div.space-y-2 > button:focus-visible {
+  border-color: var(--focus) !important;
+  background: var(--surface-soft) !important;
+  transform: translateX(2px);
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 > button[data-selected='true'] {
+  border-color: var(--focus) !important;
+  background: var(--surface-muted) !important;
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 > button span:first-child,
+.rotom-app > div.grid > aside > div.space-y-2 > button svg {
+  color: var(--muted) !important;
+}
+
+.rotom-app > div.grid > aside > div.space-y-2 > button span:nth-of-type(2) {
+  color: var(--ink) !important;
+}
+
+.rotom-app section.min-w-0 > div.overflow-hidden,
+.rotom-app section.min-w-0 > div.rounded-2xl,
+.rotom-app section.min-w-0 .rounded-2xl.border {
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  box-shadow: 0 8px 24px rgba(22, 35, 61, 0.06) !important;
+}
+
+.rotom-app section.min-w-0 .text-\[\#192441\],
+.rotom-app section.min-w-0 .text-\[\#24304e\],
+.rotom-app section.min-w-0 .text-slate-900,
+.rotom-app section.min-w-0 .text-slate-800,
+.rotom-app section.min-w-0 .text-slate-700,
+.rotom-app section.min-w-0 .text-slate-600 {
+  color: var(--ink) !important;
+}
+
+.rotom-app section.min-w-0 .text-slate-500,
+.rotom-app section.min-w-0 .text-slate-400 {
+  color: var(--muted) !important;
+}
+
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] {
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  box-shadow: none;
+}
+
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button {
+  color: var(--muted) !important;
+}
+
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button:hover,
+.rotom-app > div.grid > nav[aria-label='Informações do Pokémon'] button:focus-visible {
+  background: var(--surface-muted) !important;
+  color: var(--ink) !important;
+}
+
+.rotom-app footer {
+  border-top: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  color: var(--muted) !important;
+}
+
+.rotom-app.theme-dark {
+  --page-bg: #0f1719;
+  --surface: #172326;
+  --surface-muted: #203337;
+  --surface-soft: #1b2b2f;
+  --ink: #e4f0ed;
+  --muted: #9ab2b3;
+  --line: #345055;
+  --hero: #102d31;
+  --accent: #f4c542;
+  --focus: #64d5cf;
+}
+
+.rotom-app.theme-dark > section h1,
+.rotom-app.theme-dark > section p,
+.rotom-app.theme-dark > div.grid > aside h2,
+.rotom-app.theme-dark > div.grid > aside p,
+.rotom-app.theme-dark section.min-w-0 .text-\[\#192441\],
+.rotom-app.theme-dark section.min-w-0 .text-\[\#24304e\],
+.rotom-app.theme-dark section.min-w-0 .text-slate-900,
+.rotom-app.theme-dark section.min-w-0 .text-slate-800,
+.rotom-app.theme-dark section.min-w-0 .text-slate-700,
+.rotom-app.theme-dark section.min-w-0 .text-slate-600 {
+  color: var(--ink) !important;
+}
+
+.rotom-app.theme-dark > section p,
+.rotom-app.theme-dark section.min-w-0 .text-slate-500,
+.rotom-app.theme-dark section.min-w-0 .text-slate-400 {
+  color: var(--muted) !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div.space-y-2 > button {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+
+.rotom-app.theme-dark > div.grid > aside > div.space-y-2 > button[data-selected='true'] {
+  background: var(--surface-muted) !important;
+  border-color: var(--focus) !important;
+}
+
+.rotom-app.theme-contrast {
+  --page-bg: #000;
+  --surface: #000;
+  --surface-muted: #111;
+  --surface-soft: #111;
+  --ink: #fff;
+  --muted: #fff;
+  --line: #fff;
+  --hero: #000;
+  --focus: #ffea00;
+}
+
+@media (max-width: 1023px) {
+  .rotom-app > div.grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px;
+  }
+
+  .rotom-app > div.grid > aside > div.space-y-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
+@media (max-width: 560px) {
+  .rotom-app > header > div {
+    padding-inline: 16px;
+  }
+
+  .rotom-app > header .theme-toggle {
+    width: 42px;
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .rotom-app > header .theme-toggle span,
+  .rotom-app > header button:not(.theme-toggle) {
+    display: none;
+  }
+
+  .rotom-app > div.grid > aside > div.space-y-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rotom-app > section input {
+    font-size: 0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotom-app *,
+  .rotom-app *::before,
+  .rotom-app *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
 /* Light content surfaces need dark ink, even when the app theme is dark. */

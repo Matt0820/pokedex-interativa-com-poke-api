@@ -10,7 +10,6 @@ import {
   Moon,
   Package,
   Search,
-  SlidersHorizontal,
   Sparkles,
   Sun,
   Target,
@@ -174,6 +173,7 @@ const generations = [
   "Geração VIII",
   "Geração IX",
 ];
+const PAGE_SIZE = 24;
 
 function formatName(name: string) {
   return translatePokeName(name);
@@ -186,9 +186,10 @@ function TypePill({ name }: { name: string }) {
     <span
       title={TYPE_LABELS[name] || formatName(name)}
       aria-label={`Tipo ${TYPE_LABELS[name] || formatName(name)}`}
-      className="inline-flex h-[100px] w-[100px] items-center justify-center"
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold text-white ${TYPE_COLORS[name] || "bg-slate-500"}`}
     >
-      {TYPE_IDS[name] && <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${TYPE_IDS[name]}.png`} alt={TYPE_LABELS[name] || formatName(name)} className="h-[100px] w-[100px] object-contain" />}
+      {TYPE_IDS[name] && <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${TYPE_IDS[name]}.png`} alt="" className="h-4 w-4 object-contain" />}
+      <span>{TYPE_LABELS[name] || formatName(name)}</span>
     </span>
   );
 }
@@ -299,6 +300,7 @@ export default function Pokedex() {
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState("Todos os tipos");
   const [generation, setGeneration] = useState("Todas as gerações");
+  const [page, setPage] = useState(1);
   const [tab, setTab] = useState<
     | "overview"
     | "moves"
@@ -312,7 +314,10 @@ export default function Pokedex() {
     | "capture"
   >("overview");
   const [loadingList, setLoadingList] = useState(true);
+  const [listError, setListError] = useState(false);
+  const [listRequestKey, setListRequestKey] = useState(0);
   const [loadingPokemon, setLoadingPokemon] = useState(false);
+  const [detailError, setDetailError] = useState(false);
   const [typeNames, setTypeNames] = useState<Set<string> | null>(null);
   const [varieties, setVarieties] = useState<PokemonVariety[]>([]);
   const [speciesInfo, setSpeciesInfo] = useState<SpeciesInfo | null>(null);
@@ -341,6 +346,8 @@ export default function Pokedex() {
   const cycleTheme = () => setTheme(theme === "light" ? "dark" : theme === "dark" ? "contrast" : "light");
 
   useEffect(() => {
+    setListError(false);
+    setLoadingList(true);
     fetchWithTimeout("https://pokeapi.co/api/v2/pokemon?limit=2000")
       .then((r) => {
         if (!r.ok) throw new Error("Falha ao carregar a Pokédex");
@@ -358,10 +365,11 @@ export default function Pokedex() {
         setLoadingList(false);
       })
       .catch(() => {
-        setList(fallbackList());
+        setList([]);
+        setListError(true);
         setLoadingList(false);
       });
-  }, []);
+  }, [listRequestKey]);
   useEffect(() => {
     if (typeFilter === "Todos os tipos") {
       setTypeNames(null);
@@ -371,7 +379,7 @@ export default function Pokedex() {
       ([, label]) => label === typeFilter,
     )?.[0];
     if (!type) return;
-    fetch(`https://pokeapi.co/api/v2/type/${type}`)
+    fetchWithTimeout(`https://pokeapi.co/api/v2/type/${type}`)
       .then((r) => r.json())
       .then((data) =>
         setTypeNames(
@@ -403,6 +411,7 @@ export default function Pokedex() {
   async function loadPokemon(url: string) {
     setLoadingPokemon(true);
     setLoadingVarieties(true);
+    setDetailError(false);
     setDescription("");
     try {
       const response = await fetch(url);
@@ -442,7 +451,7 @@ export default function Pokedex() {
           : nextVarieties,
       );
     } catch {
-      setSelected(null);
+      setDetailError(true);
       setSpeciesInfo(null);
       setEvolutionChain(null);
       setDescription("");
@@ -466,8 +475,16 @@ export default function Pokedex() {
       return matchesQuery && matchesType && matchesGeneration;
     });
   }, [list, query, typeNames, generation]);
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const visibleEntries = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  useEffect(() => {
+    setPage(1);
+  }, [query, typeFilter, generation]);
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount);
+  }, [page, pageCount]);
   const selectedIndex = selected
-    ? list.findIndex((item) => item.name === selected.name)
+    ? filtered.findIndex((item) => item.name === selected.name)
     : -1;
   const moves =
     selected?.moves.filter((move) =>
@@ -576,20 +593,20 @@ export default function Pokedex() {
           </div>
         </div>
       </header>
-      <section className="relative overflow-hidden bg-[#17223e] px-5 pb-16 pt-14 text-white lg:px-10 lg:pb-20">
+      <section id="explore" aria-labelledby="explore-title" className="relative overflow-hidden bg-[#17223e] px-5 pb-16 pt-14 text-white lg:px-10 lg:pb-20">
         <div className="absolute -right-24 -top-32 h-96 w-96 rounded-full border-[42px] border-white/5" />
         <div className="absolute bottom-[-100px] left-[38%] h-72 w-72 rounded-full border-[30px] border-[#f5c84b]/10" />
         <div className="relative mx-auto max-w-[1440px]">
           <p className="mb-3 text-xs font-bold uppercase tracking-[.3em] text-[#f5c84b]">
             Banco de dados do treinador
           </p>
-          <h1 className="max-w-2xl text-4xl font-black leading-tight tracking-tight md:text-6xl">
+          <h1 id="explore-title" className="max-w-2xl text-4xl font-black leading-tight tracking-tight md:text-6xl">
             Conheça todos os Pokémon.
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 md:text-base">
             Explore habilidades, tipos, movimentos e muito mais em um só lugar.
           </p>
-          <div className="mt-8 flex max-w-2xl items-center gap-3 rounded-xl bg-white p-2 shadow-2xl shadow-black/20">
+          <form role="search" onSubmit={(event) => event.preventDefault()} className="mt-8 flex max-w-2xl items-center gap-3 rounded-xl bg-white p-2 shadow-2xl shadow-black/20">
             <Search className="ml-3 h-5 w-5 text-slate-400" />
             <input
               aria-label="Buscar Pokémon"
@@ -601,14 +618,14 @@ export default function Pokedex() {
             <kbd className="hidden rounded bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-400 sm:block">
               ⌘ K
             </kbd>
-            <button className="rounded-lg bg-[#f4c542] px-4 py-3 text-sm font-black text-[#1b2644] hover:bg-[#ffd85c]">
+            <button type="submit" className="rounded-lg bg-[#f4c542] px-4 py-3 text-sm font-black text-[#1b2644] hover:bg-[#ffd85c]">
               Buscar
             </button>
-          </div>
+          </form>
         </div>
       </section>
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 lg:grid-cols-[360px_1fr] lg:px-10">
-        <aside>
+        <aside aria-busy={loadingList}>
           <div className="mb-5 flex items-center justify-between">
             <div>
               <h2 className="text-lg font-black text-[#192441]">Pokémon</h2>
@@ -616,9 +633,6 @@ export default function Pokedex() {
                 {filtered.length || 0} resultados encontrados
               </p>
             </div>
-            <button className="rounded-lg border border-slate-200 bg-white p-2.5 text-slate-500">
-              <SlidersHorizontal className="h-4 w-4" />
-            </button>
           </div>
           <div className="mb-5 grid grid-cols-2 gap-2">
             <label className="relative">
@@ -640,25 +654,39 @@ export default function Pokedex() {
                 onChange={(e) => setGeneration(e.target.value)}
                 className="w-full appearance-none rounded-lg border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-500 outline-none"
               >
-                <option>{generation}</option>
-                {generations.slice(1).map((g) => (
+                {generations.map((g) => (
                   <option key={g}>{g}</option>
                 ))}
               </select>
               <ChevronDown className="pointer-events-none absolute right-3 top-3.5 h-3.5 text-slate-400" />
             </label>
           </div>
-          <div className="space-y-2 lg:max-h-[610px] lg:overflow-y-auto lg:pr-2">
-            {loadingList ? (
-              <div className="rounded-xl bg-white p-5 text-sm text-slate-400">
-                Carregando Pokédex...
+          <div className="space-y-2 lg:max-h-[610px] lg:overflow-y-auto lg:pr-2" role="list" aria-label="Resultados da Pokédex">
+            {listError ? (
+              <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-900" role="alert">
+                <p className="font-bold">Não conseguimos carregar os Pokémon agora.</p>
+                <p className="mt-2 text-xs text-red-700">Verifique a conexão e tente novamente.</p>
+                <button
+                  type="button"
+                  onClick={() => setListRequestKey((current) => current + 1)}
+                  className="mt-4 rounded-lg bg-red-900 px-3 py-2 text-xs font-bold text-white transition hover:bg-red-800"
+                >
+                  Tentar novamente
+                </button>
               </div>
-            ) : (
-              filtered.map((item) => (
+            ) : loadingList ? (
+              <div className="space-y-2" role="status" aria-live="polite" aria-label="Carregando resultados">
+                {Array.from({ length: 6 }, (_, index) => (
+                  <div key={index} className="h-[68px] animate-pulse rounded-xl border border-slate-200 bg-slate-100" />
+                ))}
+              </div>
+            ) : visibleEntries.length ? (
+              visibleEntries.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => loadPokemon(item.url)}
                   data-selected={selected?.name === item.name || undefined}
+                  role="listitem"
                   className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition ${selected?.name === item.name ? "border-[#f1c243] bg-[#fff9e8] shadow-sm" : "border-transparent bg-white hover:border-slate-200"}`}
                 >
                   <span className="w-8 text-xs font-bold text-slate-400">
@@ -667,6 +695,7 @@ export default function Pokedex() {
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId(item)}.png`}
                     alt=""
+                    loading="lazy"
                     className="h-12 w-12 object-contain"
                   />
                   <span className="flex-1 text-sm font-black text-[#24304e]">
@@ -675,12 +704,45 @@ export default function Pokedex() {
                   <ChevronRight className="h-4 w-4 text-slate-300" />
                 </button>
               ))
+            ) : (
+              <div className="rounded-xl bg-white p-6 text-center text-sm text-slate-500" role="status">
+                <p className="font-bold text-slate-700">Nenhum Pokémon encontrado.</p>
+                <p className="mt-2 text-xs">Tente outro nome, número ou combinação de filtros.</p>
+              </div>
             )}
           </div>
+          {!loadingList && filtered.length > 0 && (
+            <nav className="mt-5 flex items-center justify-between gap-3" aria-label="Paginação da Pokédex">
+              <button
+                type="button"
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+                disabled={page === 1}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 transition hover:border-slate-300 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Anterior
+              </button>
+              <span className="text-xs font-semibold text-slate-500" aria-live="polite">
+                Página {page} de {pageCount}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
+                disabled={page === pageCount}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 transition hover:border-slate-300 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Próxima
+              </button>
+            </nav>
+          )}
         </aside>
         <section className="min-w-0">
           {selected && (
             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              {detailError && (
+                <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 text-xs text-amber-900" role="alert">
+                  Não conseguimos atualizar todos os dados deste Pokémon. O conteúdo anterior continua disponível.
+                </div>
+              )}
               {(varieties.length > 0 || loadingVarieties) && (
                 <div className="border-b border-slate-100 bg-white px-6 py-5 md:px-10">
                   <div className="mb-3 flex items-center justify-between">
@@ -905,7 +967,7 @@ export default function Pokedex() {
             <button
               disabled={selectedIndex <= 0}
               onClick={() =>
-                selectedIndex > 0 && loadPokemon(list[selectedIndex - 1].url)
+                selectedIndex > 0 && loadPokemon(filtered[selectedIndex - 1].url)
               }
               className="flex items-center gap-2 font-bold disabled:opacity-30"
             >
@@ -913,10 +975,10 @@ export default function Pokedex() {
             </button>
             <span>Dados fornecidos pela PokéAPI</span>
             <button
-              disabled={selectedIndex >= list.length - 1}
+              disabled={selectedIndex < 0 || selectedIndex >= filtered.length - 1}
               onClick={() =>
-                selectedIndex < list.length - 1 &&
-                loadPokemon(list[selectedIndex + 1].url)
+                selectedIndex < filtered.length - 1 &&
+                loadPokemon(filtered[selectedIndex + 1].url)
               }
               className="flex items-center gap-2 font-bold disabled:opacity-30"
             >
@@ -928,6 +990,7 @@ export default function Pokedex() {
           <>
             <nav
               aria-label="Informações do Pokémon"
+              role="tablist"
               className="mt-4 flex gap-1 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-sm"
             >
               {(
@@ -947,6 +1010,9 @@ export default function Pokedex() {
                 <button
                   key={value}
                   onClick={() => setTab(value)}
+                  id={`tab-${value}`}
+                  role="tab"
+                  aria-selected={tab === value}
                   className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-black transition ${tab === value ? "bg-[#192441] text-white shadow-sm" : "text-slate-500 hover:bg-slate-50"}`}
                 >
                   {label}
